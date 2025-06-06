@@ -92,7 +92,7 @@ export const Home = () => {
 
 
   return (
-    <div className="text-center py-8 w-full max-w-[420px] mx-auto px-4">
+    <div className="text-center py-8 w-full max-w-[420px] mx-auto px-4 text-black">
       <h1 className="text-2xl font-semibold mb-4">김지현 ❤️ 윤선영</h1>
       <p className="text-lg mb-2">2025년 09월 28일 토요일 오후 1시 30분</p>
       <p className="text-base text-gray-600 mb-6">WI컨벤션 (수원 팔달구)</p>
