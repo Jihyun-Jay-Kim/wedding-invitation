@@ -8,8 +8,6 @@ const WEDDING_LNG = Number(import.meta.env.VITE_WEDDING_LNG);
 const galleryImages = Array.from({ length: 15 }, (_, i) => `/assets/images/photo${i + 1}.jpg`);
 
 export const Home = () => {
-  const [guestbook, setGuestbook] = useState<string[]>([]);
-  const [message, setMessage] = useState("");
   const [rsvpName, setRsvpName] = useState("");
   const [attending, setAttending] = useState(true);
   const [rsvpConfirmed, setRsvpConfirmed] = useState(false);
