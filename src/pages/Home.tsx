@@ -8,6 +8,8 @@ const WEDDING_LNG = Number(import.meta.env.VITE_WEDDING_LNG);
 const galleryImages = Array.from({ length: 15 }, (_, i) => `/assets/images/photo${i + 1}.jpg`);
 
 export const Home = () => {
+  const [guestbook, setGuestbook] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
   const [rsvpName, setRsvpName] = useState("");
   const [attending, setAttending] = useState(true);
   const [rsvpConfirmed, setRsvpConfirmed] = useState(false);
@@ -17,7 +19,7 @@ export const Home = () => {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false`;
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false`;
     script.async = true;
     script.onload = () => {
       window.kakao.maps.load(() => {
@@ -36,6 +38,13 @@ export const Home = () => {
     };
     document.head.appendChild(script);
   }, []);
+
+  const handleGuestbookSubmit = () => {
+    if (message.trim()) {
+      setGuestbook([...guestbook, message]);
+      setMessage("");
+    }
+  };
 
   const handleRSVPSubmit = () => {
     setRsvpConfirmed(true);
@@ -110,7 +119,29 @@ export const Home = () => {
       </div>
       {activeImageIndex !== null && <GalleryModal />}
 
-      {/* 이후는 기존 코드 그대로 유지 */}
+      <h2 className="text-lg font-semibold mb-2">방명록</h2>
+      <div className="px-4 mb-8">
+        <textarea
+          className="w-full border rounded p-2 text-sm mb-2"
+          rows={3}
+          placeholder="축하 메시지를 남겨주세요"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <button
+          className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
+          onClick={handleGuestbookSubmit}
+        >
+          방명록 남기기
+        </button>
+        <ul className="mt-4 space-y-2 text-sm text-left">
+          {guestbook.map((msg, idx) => (
+            <li key={idx} className="bg-gray-100 p-2 rounded">{msg}</li>
+          ))}
+        </ul>
+      </div>
+
+      <hr className="my-8" />
 
       <h2 className="text-lg font-semibold mb-2">오시는 길</h2>
       <p className="text-sm text-gray-600 mb-4">WI컨벤션 (경기 수원시 팔달구 인계로 123)</p>
