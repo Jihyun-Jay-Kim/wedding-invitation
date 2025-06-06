@@ -90,9 +90,152 @@ export const Home = () => {
     </div>
   );
 
+
   return (
     <div className="text-center py-8 w-full max-w-[420px] mx-auto px-4">
-      {/* 이하 동일 */}
+      <h1 className="text-2xl font-semibold mb-4">김지현 ❤️ 윤선영</h1>
+      <p className="text-lg mb-2">2025년 09월 28일 토요일 오후 1시 30분</p>
+      <p className="text-base text-gray-600 mb-6">WI컨벤션 (수원 팔달구)</p>
+
+      <div className="w-full max-w-xs mx-auto mb-6">
+        <img
+          src="/assets/images/main-photo.jpg"
+          alt="신랑 신부 사진"
+          className="rounded-xl shadow-md w-full"
+        />
+      </div>
+
+      <p className="text-sm text-gray-700 leading-relaxed mb-6">
+        함께하는 모든 순간이 축복이 되길 바라며,<br />
+        저희 두 사람이 하나 되는 날에<br />
+        소중한 발걸음으로 축복해 주세요.
+      </p>
+
+      <hr className="my-8" />
+
+      <h2 className="text-lg font-semibold mb-2">사진 갤러리</h2>
+      <div className="grid grid-cols-3 gap-2 mb-8">
+        {galleryThumbs.map((src, index) => (
+          <img
+            key={index}
+            src={src}
+            loading="lazy"
+            className="rounded cursor-pointer object-cover h-28"
+            onClick={() => setActiveImageIndex(index)}
+          />
+        ))}
+      </div>
+      {activeImageIndex !== null && <GalleryModal />}
+
+      <h2 className="text-lg font-semibold mb-2">방명록</h2>
+      <div className="px-4 mb-8">
+        <textarea
+          className="w-full border rounded p-2 text-sm mb-2"
+          rows={3}
+          placeholder="축하 메시지를 남겨주세요"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <button
+          className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
+          onClick={handleGuestbookSubmit}
+        >
+          방명록 남기기
+        </button>
+        <ul className="mt-4 space-y-2 text-sm text-left">
+          {guestbook.map((msg, idx) => (
+            <li key={idx} className="bg-gray-100 p-2 rounded">{msg}</li>
+          ))}
+        </ul>
+      </div>
+
+      <hr className="my-8" />
+
+      <h2 className="text-lg font-semibold mb-2">오시는 길</h2>
+      <p className="text-sm text-gray-600 mb-4">WI컨벤션 (경기 수원시 팔달구 인계로 123)</p>
+      <div id="map" className="w-full h-80 rounded-lg shadow mb-6"></div>
+
+      <div className="text-left text-sm text-gray-700 leading-relaxed mb-8 px-4">
+        <p className="mb-2">🚘 주차 안내: 건물 내 지하 주차장 이용 가능</p>
+        <p className="mb-2">🚉 지하철: 수원시청역 4번 출구 도보 5분</p>
+        <p>📍 주소: 경기 수원시 팔달구 인계로 123 (WI컨벤션)</p>
+      </div>
+
+      <hr className="my-8" />
+
+      <h2 className="text-lg font-semibold mb-2">마음 전하실 곳</h2>
+      <div className="flex justify-center gap-4 mb-4">
+        <button
+          onClick={() => setShowGroomAccount(true)}
+          className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 text-sm"
+        >
+          신랑측 계좌
+        </button>
+        <button
+          onClick={() => setShowBrideAccount(true)}
+          className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 text-sm"
+        >
+          신부측 계좌
+        </button>
+      </div>
+
+      {showGroomAccount && (
+        <Modal
+          title="신랑측 계좌"
+          content={<p>💳 김기석 / 국민은행 123456-78-901234</p>}
+          onClose={() => setShowGroomAccount(false)}
+        />
+      )}
+
+      {showBrideAccount && (
+        <Modal
+          title="신부측 계좌"
+          content={<p>💳 윤선영 / 신한은행 987654-32-109876</p>}
+          onClose={() => setShowBrideAccount(false)}
+        />
+      )}
+
+      <hr className="my-8" />
+
+      <h2 className="text-lg font-semibold mb-2">RSVP</h2>
+      <div className="px-4 mb-12">
+        <input
+          className="w-full border rounded p-2 text-sm mb-2"
+          type="text"
+          placeholder="이름을 입력해주세요"
+          value={rsvpName}
+          onChange={(e) => setRsvpName(e.target.value)}
+        />
+        <div className="flex items-center gap-4 text-sm mb-4">
+          <label>
+            <input
+              type="radio"
+              checked={attending === true}
+              onChange={() => setAttending(true)}
+            /> 참석함
+          </label>
+          <label>
+            <input
+              type="radio"
+              checked={attending === false}
+              onChange={() => setAttending(false)}
+            /> 참석하지 않음
+          </label>
+        </div>
+        <button
+          className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
+          onClick={handleRSVPSubmit}
+        >
+          확인
+        </button>
+        {rsvpConfirmed && (
+          <Modal
+            title="참석 확인"
+            content={<p>감사합니다, {rsvpName || "손님"}님. 참석 여부가 접수되었습니다.</p>}
+            onClose={() => setRsvpConfirmed(false)}
+          />
+        )}
+      </div>
     </div>
   );
 };
