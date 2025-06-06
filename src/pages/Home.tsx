@@ -39,13 +39,6 @@ export const Home = () => {
     document.head.appendChild(script);
   }, []);
 
-  const handleGuestbookSubmit = () => {
-    if (message.trim()) {
-      setGuestbook([...guestbook, message]);
-      setMessage("");
-    }
-  };
-
   const handleRSVPSubmit = () => {
     setRsvpConfirmed(true);
   };
