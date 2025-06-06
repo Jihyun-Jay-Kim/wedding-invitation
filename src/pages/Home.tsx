@@ -1,5 +1,4 @@
 // wedding-invitation-app/src/pages/Home.tsx
-import React, { useEffect, useState } from "react";
 
 const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
 const WEDDING_LAT = Number(import.meta.env.VITE_WEDDING_LAT);
