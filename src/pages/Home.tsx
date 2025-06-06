@@ -5,7 +5,8 @@ const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
 const WEDDING_LAT = Number(import.meta.env.VITE_WEDDING_LAT);
 const WEDDING_LNG = Number(import.meta.env.VITE_WEDDING_LNG);
 
-const galleryImages = Array.from({ length: 15 }, (_, i) => `/assets/images/photo${i + 1}.jpg`);
+const galleryThumbs = Array.from({ length: 15 }, (_, i) => `/assets/images/thumb/photo${i + 1}.webp`);
+const galleryFull = Array.from({ length: 15 }, (_, i) => `/assets/images/full/photo${i + 1}.jpg`);
 
 export const Home = () => {
   const [guestbook, setGuestbook] = useState<string[]>([]);
@@ -63,7 +64,7 @@ export const Home = () => {
   const GalleryModal = () => (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
       <div className="relative w-full max-w-lg">
-        <img src={galleryImages[activeImageIndex!]} alt="갤러리 이미지" className="w-full rounded-lg" />
+        <img src={galleryFull[activeImageIndex!]} alt="갤러리 이미지" className="w-full rounded-lg" />
         <button
           onClick={() => setActiveImageIndex(null)}
           className="absolute top-2 right-2 text-white text-2xl"
@@ -74,7 +75,7 @@ export const Home = () => {
             className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white text-3xl"
           >‹</button>
         )}
-        {activeImageIndex! < galleryImages.length - 1 && (
+        {activeImageIndex! < galleryThumbs.length - 1 && (
           <button
             onClick={() => setActiveImageIndex(activeImageIndex! + 1)}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white text-3xl"
@@ -108,10 +109,11 @@ export const Home = () => {
 
       <h2 className="text-lg font-semibold mb-2">사진 갤러리</h2>
       <div className="grid grid-cols-3 gap-2 mb-8">
-        {galleryImages.map((src, index) => (
+        {galleryThumbs.map((src, index) => (
           <img
             key={index}
             src={src}
+            loading="lazy"
             className="rounded cursor-pointer object-cover h-28"
             onClick={() => setActiveImageIndex(index)}
           />
